@@ -1,0 +1,21 @@
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="10dp"
+        android:divider="@null"
+        android:drawSelectorOnTop="false"
+        android:fadingEdge="none"
+        android:background="#00000000"
+        android:groupIndicator="@null"
+        android:listSelector="#00000000"
+        android:scrollbars="none">>
+    </ExpandableListView>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/news_list_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#00000000"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="#545454"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/item_image"
+                android:layout_width="80dp"
+                fresco:progressBarImage="@drawable/image_small_default"
+                android:layout_height="70dp"
+                fresco:actualImageScaleType="focusCrop" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
