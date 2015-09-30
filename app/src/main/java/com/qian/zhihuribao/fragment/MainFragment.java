@@ -2,7 +2,6 @@ package com.qian.zhihuribao.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -61,6 +60,7 @@ public class MainFragment extends Fragment implements ScreenShotable, SwipeRefre
     private String curDate;
     SwipeRefreshLayout mSwipeRefreshLayout;
     JsonCallback latestJsonCallback;
+    JsonCallback mBeforeJsonCallback;
 
     public static MainFragment newInstance(int resId) {
         MainFragment contentFragment = new MainFragment();
@@ -80,6 +80,7 @@ public class MainFragment extends Fragment implements ScreenShotable, SwipeRefre
         super.onCreate(savedInstanceState);
         curDate = DateUtil.formatDate(new Date(), "yyyyMMdd");
         latestJsonCallback = new LatestJsonCallback();
+        mBeforeJsonCallback = new BeforeJsonCallback();
     }
 
     @Override
@@ -402,7 +403,7 @@ public class MainFragment extends Fragment implements ScreenShotable, SwipeRefre
             return;
         }
         isLoading = true;
-        WebService.getInstance().asyncGet(Config.URL_BEFORE + data, new BeforeJsonCallback());
+        WebService.getInstance().asyncGet(Config.URL_BEFORE + data, mBeforeJsonCallback);
     }
 
     private class BeforeJsonCallback extends JsonCallback<Before> {

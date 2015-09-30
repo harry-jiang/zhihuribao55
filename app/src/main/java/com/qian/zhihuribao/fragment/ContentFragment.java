@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -55,6 +54,8 @@ public class ContentFragment extends Fragment implements ScreenShotable, SwipeRe
     private LinearLayout layout_icons;
     private TextView tv_description;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    LatestJsonCallback mLatestJsonCallback;
+    BeforeJsonCallback mBeforeJsonCallback;
 
     public static ContentFragment newInstance(int resId) {
         ContentFragment contentFragment = new ContentFragment();
@@ -75,6 +76,8 @@ public class ContentFragment extends Fragment implements ScreenShotable, SwipeRe
         curDate = DateUtil.formatDate(new Date(), "yyyyMMdd");
         themeId = getArguments().getInt(Integer.class.getName());
         themeURL = Config.URL_THEME_CONTENT + themeId;
+        mLatestJsonCallback = new LatestJsonCallback();
+        mBeforeJsonCallback = new BeforeJsonCallback();
     }
 
     @Override
@@ -140,7 +143,7 @@ public class ContentFragment extends Fragment implements ScreenShotable, SwipeRe
     @Override
     public void onRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
-        WebService.getInstance().asyncGet(themeURL, new LatestJsonCallback());
+        WebService.getInstance().asyncGet(themeURL, mLatestJsonCallback);
     }
 
     class onItemClickListener implements View.OnClickListener {
@@ -294,7 +297,7 @@ public class ContentFragment extends Fragment implements ScreenShotable, SwipeRe
             return;
         }
         isLoading = true;
-        WebService.getInstance().asyncGet(themeURL + Config.URL_THEME_BEFORE + id, new BeforeJsonCallback());
+        WebService.getInstance().asyncGet(themeURL + Config.URL_THEME_BEFORE + id, mBeforeJsonCallback);
     }
 
     private class BeforeJsonCallback extends JsonCallback<ThemeContent> {

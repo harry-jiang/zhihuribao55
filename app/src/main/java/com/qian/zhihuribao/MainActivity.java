@@ -42,11 +42,9 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
     private LinearLayout linearLayout;
     private ActionBarDrawerToggle drawerToggle;
     private ViewAnimator viewAnimator;
-    private int res = R.drawable.content_music;
     private ThemeJsonCallback themeJsonCallback;
 
     Toolbar toolbar;
-    View content_overlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, mainFragment)
                 .commit();
-        content_overlay = findViewById(R.id.content_overlay);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
