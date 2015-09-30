@@ -226,6 +226,7 @@ public class MainFragment extends Fragment implements ScreenShotable, SwipeRefre
         @Override
         public void onError(Request request, IOException e) {
             mSwipeRefreshLayout.setRefreshing(false);
+
         }
 
     }
