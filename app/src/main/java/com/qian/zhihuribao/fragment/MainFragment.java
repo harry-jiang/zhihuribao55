@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.qian.zhihuribao.NewsDetailActivity;
+import com.qian.zhihuribao.NewsDetailActivity2;
 import com.qian.zhihuribao.R;
 import com.qian.zhihuribao.bean.Before;
 import com.qian.zhihuribao.bean.Latest;
@@ -189,7 +190,7 @@ public class MainFragment extends Fragment implements ScreenShotable, SwipeRefre
 
         @Override
         public void onClick(View v) {
-            Intent i = new Intent(activity, NewsDetailActivity.class);
+            Intent i = new Intent(activity, NewsDetailActivity2.class);
             i.putExtra("storyId", id);
             startActivity(i);
         }

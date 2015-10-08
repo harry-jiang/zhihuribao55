@@ -55,6 +55,7 @@ public class NewsDetailActivity extends AppCompatActivity implements SwipeRefres
 
     private void initView() {
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout = new SwipeRefreshLayout(this);
         mWebView = (WebView) findViewById(R.id.webview);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         setUpWebViewDefaults();
