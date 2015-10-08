@@ -190,7 +190,7 @@ public class MainFragment extends Fragment implements ScreenShotable, SwipeRefre
 
         @Override
         public void onClick(View v) {
-            Intent i = new Intent(activity, NewsDetailActivity2.class);
+            Intent i = new Intent(activity, NewsDetailActivity.class);
             i.putExtra("storyId", id);
             startActivity(i);
         }
