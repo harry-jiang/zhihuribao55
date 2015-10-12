@@ -8,8 +8,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -32,6 +34,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class NewsDetailActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+    //手指在屏幕滑动，X轴最小变化值
+    private static final int FLING_MIN_DISTANCE_X = 200;
+
+    //手指在屏幕滑动，Y轴最小变化值
+    private static final int FLING_MIN_DISTANCE = 10;
+
+    //手指在屏幕滑动，最小速度
+    private static final int FLING_MIN_VELOCITY = 1;
     Toolbar toolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private WebView mWebView;
@@ -40,6 +50,7 @@ public class NewsDetailActivity extends AppCompatActivity implements SwipeRefres
     StoryJsonCallback mStoryJsonCallback;
     StoryExtraJsonCallback mStoryExtraJsonCallback;
     StoryExtra storyExtra;
+    private GestureDetector mGestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class NewsDetailActivity extends AppCompatActivity implements SwipeRefres
         id = getIntent().getIntExtra("storyId", 7124797);
         setActionBar();
         initView();
+        mGestureDetector = new GestureDetector(this, mOnGestureListener);
         mStoryJsonCallback = new StoryJsonCallback();
         mStoryExtraJsonCallback = new StoryExtraJsonCallback();
         onRefresh();
@@ -55,7 +67,6 @@ public class NewsDetailActivity extends AppCompatActivity implements SwipeRefres
 
     private void initView() {
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        mSwipeRefreshLayout = new SwipeRefreshLayout(this);
         mWebView = (WebView) findViewById(R.id.webview);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         setUpWebViewDefaults();
@@ -246,6 +257,61 @@ public class NewsDetailActivity extends AppCompatActivity implements SwipeRefres
 
         mWebView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
     }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        try {
+            mGestureDetector.onTouchEvent(ev);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private GestureDetector.OnGestureListener mOnGestureListener = new GestureDetector.OnGestureListener() {
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+            boolean isXWell = Math.abs(e2.getX() - e1.getX()) < FLING_MIN_DISTANCE_X ? true : true;
+
+            if (isXWell && e1.getY() - e2.getY() > FLING_MIN_DISTANCE && Math.abs(velocityY) > FLING_MIN_VELOCITY) {
+                getSupportActionBar().hide();
+            } else if (isXWell && e2.getY() - e1.getY() > FLING_MIN_DISTANCE && Math.abs(velocityY) > FLING_MIN_VELOCITY) {
+                getSupportActionBar().show();
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2,
+                                float distanceX, float distanceY) {
+            return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return false;
+        }
+    };
 
 
 }
