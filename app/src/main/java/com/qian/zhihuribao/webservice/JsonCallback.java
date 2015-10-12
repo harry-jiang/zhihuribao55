@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.qian.zhihuribao.utils.CacheUtil;
 import com.qian.zhihuribao.utils.JsonUtils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -53,10 +54,7 @@ public abstract class JsonCallback<Tjson> implements Callback {
     final public void onFailure(Request request, IOException e) {
         this.request = request;
         this.e = e;
-        Message msg = new Message();
-        msg.what = -1;
-        msg.obj = this;
-        handler.sendMessage(msg);
+        sendMessage(-1);
     }
 
     @Override
@@ -64,13 +62,23 @@ public abstract class JsonCallback<Tjson> implements Callback {
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
         String bodyStr = response.body().string();
         Log.d("JsonCallback:bodyStr", bodyStr);
+        CacheUtil.save(response.request().urlString(), bodyStr);
+        onResponse(bodyStr);
+
+    }
+
+    final public void onResponse(String response) {
         if (isByClass) {
-            tjson = JsonUtils.fromJson(bodyStr, tClass);
+            tjson = JsonUtils.fromJson(response, tClass);
         } else {
-            tjson = JsonUtils.fromJson(bodyStr, type);
+            tjson = JsonUtils.fromJson(response, type);
         }
+        sendMessage(1);
+    }
+
+    private void sendMessage(int what) {
         Message msg = new Message();
-        msg.what = 1;
+        msg.what = what;
         msg.obj = this;
         handler.sendMessage(msg);
     }

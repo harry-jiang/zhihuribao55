@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         MainFragment mainFragment = MainFragment.newInstance(R.drawable.content_music);
         getSupportFragmentManager().beginTransaction()

@@ -23,7 +23,7 @@ import com.qian.zhihuribao.bean.StoryDetail;
 import com.qian.zhihuribao.bean.StoryExtra;
 import com.qian.zhihuribao.common.Config;
 import com.qian.zhihuribao.utils.AssetsUtils;
-import com.qian.zhihuribao.utils.NetWorkHelper;
+import com.qian.zhihuribao.utils.NetWorkUtil;
 import com.qian.zhihuribao.webservice.JsonCallback;
 import com.qian.zhihuribao.webservice.WebService;
 import com.squareup.okhttp.Request;
@@ -225,7 +225,7 @@ public class NewsDetailActivity extends AppCompatActivity implements SwipeRefres
 
         String headerDef = "file:///android_asset/www/news_detail_header_def.jpg";
 
-        if (NetWorkHelper.isMobile(this) && PreferenceManager.getDefaultSharedPreferences(this).getBoolean("noimage_nowifi?", false)) {
+        if (NetWorkUtil.isMobile(this) && PreferenceManager.getDefaultSharedPreferences(this).getBoolean("noimage_nowifi?", false)) {
 
         } else {
             headerDef = storyDetail.getImage();
